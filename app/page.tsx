@@ -1,5 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
 
+export default function Home() {
+  // باقي الكود...
 export default function Home() {
   const [selectedPackage, setSelectedPackage] = useState('أبحر البحرية');
   const [guests, setGuests] = useState(1);
