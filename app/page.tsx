@@ -10,11 +10,19 @@ export default function Home() {
   const [date, setDate] = useState('');
   const [tripType, setTripType] = useState('مشتركة');
   
-  // الإضافات الاختيارية (بما فيها خيار السكن الجديد)
+  // الإضافات الاختيارية
   const [includeHotel, setIncludeHotel] = useState(false);
   const [includeTransport, setIncludeTransport] = useState(false);
   const [includeMeal, setIncludeMeal] = useState(false);
   const [includeCoffee, setIncludeCoffee] = useState(false);
+
+  // حالة نموذج الجولة الخاصة
+  const [customModalOpen, setCustomModalOpen] = useState(false);
+  const [customHours, setCustomHours] = useState('4');
+  const [customPlaces, setCustomPlaces] = useState('');
+  const [customGuests, setCustomGuests] = useState(2);
+
+  const whatsappNumber = '966500000000'; // ضع رقم الواتساب الرسمي هنا
 
   const t = {
     ar: {
@@ -22,7 +30,7 @@ export default function Home() {
       brandSub: "تجارب جدة السياحية",
       heroBadge: "وجهتك الأولى لتجارب البحر والتراث والأنشطة 🌊",
       heroTitle: "روّق واكتشف جدة بشغف جديد",
-      heroDesc: "نضمن لك أفضل لحظات عروس البحر الأحمر في 8 باقات حصرية صُممت خصيصاً لتصنع لك ذكريات استثنائية.",
+      heroDesc: "نحزم لك أفضل لحظات عروس البحر الأحمر في 8 باقات حصرية صُممت خصيصاً لتصنع لك ذكريات استثنائية.",
       bookBtn: "احجز تجربتك",
       packagesTitle: "الباقات والتجارب المتاحة (8 باقات)",
       packagesSub: "اضغط على التفاصيل وجدول الرحلة للاطلاع على البرنامج والموقع على الخريطة",
@@ -48,6 +56,10 @@ export default function Home() {
       totalEstimated: "المبلغ الإجمالي المتوقع:",
       totalSub: "شامل كافة الخيارات المحددة",
       whatsappBtn: "💬 تأكيد الحجز المباشر عبر الواتساب",
+      customTourBtn: "🎨 صمم جولتك الخاصة بنفسك",
+      customTourTitle: "تصميم جولة خاصة مخصصة 🛠️",
+      customTourSub: "حدد تفاصيل جولتك وسنقوم بتنسيقها لك فوراً عبر الواتساب",
+      floatingWhatsapp: "استفسار سريع",
       trustStats: [
         { num: "+1,200", label: "سائح ومغامر سعيد" },
         { num: "4.9/5", label: "تقييم العملاء" },
@@ -92,6 +104,10 @@ export default function Home() {
       totalEstimated: "Estimated Total Price:",
       totalSub: "Includes all selected options",
       whatsappBtn: "💬 Confirm Booking via WhatsApp",
+      customTourBtn: "🎨 Create Your Custom Tour",
+      customTourTitle: "Build Custom Tour 🛠️",
+      customTourSub: "Set your preferences and we will organize it directly via WhatsApp",
+      floatingWhatsapp: "Quick Inquiry",
       trustStats: [
         { num: "+1,200", label: "Happy Adventurers" },
         { num: "4.9/5", label: "Customer Rating" },
@@ -107,7 +123,7 @@ export default function Home() {
     }
   }[lang];
 
-  // قائمة الباقات الـ 8 الكاملة
+  // قائمة الباقات الـ 8 مع تحديث صورة البلد الرسمية
   const packages = [
     {
       id: 'abhur',
@@ -209,12 +225,8 @@ export default function Home() {
 
   const currentPkg = packages.find(p => p.title === selectedPackage) || packages[0];
   let basePrice = currentPkg.price;
-  
-  if (tripType === 'خاصة (VIP)' || tripType === 'Private (VIP)') {
-    basePrice += 150;
-  }
+  if (tripType === 'خاصة (VIP)' || tripType === 'Private (VIP)') basePrice += 150;
 
-  // حساب التكاليف والإضافات
   const hotelCost = includeHotel ? 350 : 0;
   const transportCost = includeTransport ? 80 : 0;
   const mealCost = includeMeal ? 120 : 0;
@@ -223,11 +235,8 @@ export default function Home() {
   const pricePerPerson = basePrice + hotelCost + transportCost + mealCost + coffeeCost;
   const totalPrice = pricePerPerson * guests;
 
-  const whatsappNumber = '966500000000'; // ضع رقم الواتساب الرسمي هنا
-
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    
     let extrasList: string[] = [];
     if (includeHotel) extrasList.push(lang === 'ar' ? 'سكن وفندق (+350 ريال)' : 'Hotel Stay (+350 SAR)');
     if (includeTransport) extrasList.push(lang === 'ar' ? 'مواصلات خاصة (+80 ريال)' : 'Private Transport (+80 SAR)');
@@ -237,25 +246,50 @@ export default function Home() {
     const extrasText = extrasList.length > 0 ? extrasList.join(', ') : (lang === 'ar' ? 'بدون إضافات' : 'None');
 
     const message = lang === 'ar' 
-      ? `مرحباً فريق روّق 🌊، أود حجز تجربة معكم:%0A- *الباقة:* ${selectedPackage}%0A- *نوع الرحلة:* ${tripType}%0A- *عدد الأشخاص:* ${guests}%0A- *التاريخ:* ${date}%0A- *الإضافات:* ${extrasText}%0A- *الإجمالي المتوقع:* ${totalPrice} ريال%0Aيرجى تأكيد الحجز وتزويدي بالتفاصيل.`
-      : `Hello Rawaq Team 🌊, I would like to book a trip:%0A- *Package:* ${selectedPackage}%0A- *Trip Type:* ${tripType}%0A- *Guests:* ${guests}%0A- *Date:* ${date}%0A- *Extras:* ${extrasText}%0A- *Total:* ${totalPrice} SAR%0APlease confirm booking details.`;
+      ? `مرحباً فريق روّق 🌊، أود حجز تجربة معكم:%0A- *الباقة:* ${selectedPackage}%0A- *نوع الرحلة:* ${tripType}%0A- *عدد الأشخاص:* ${guests}%0A- *التاريخ:* ${date}%0A- *الإضافات:* ${extrasText}%0A- *الإجمالي المتوقع:* ${totalPrice} ريال%0Aيرجى تأكيد الحجز.`
+      : `Hello Rawaq Team 🌊, I would like to book a trip:%0A- *Package:* ${selectedPackage}%0A- *Trip Type:* ${tripType}%0A- *Guests:* ${guests}%0A- *Date:* ${date}%0A- *Extras:* ${extrasText}%0A- *Total:* ${totalPrice} SAR%0APlease confirm details.`;
     
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
   };
 
+  const handleCustomTourSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg = lang === 'ar'
+      ? `مرحباً فريق روّق 🌊، أود تصميم جولة خاصة بمتطلباتي:%0A- *عدد الساعات:* ${customHours} ساعات%0A- *عدد الأشخاص:* ${customGuests}%0A- *المعالم المطلوبة:* ${customPlaces || 'حسب توصيتكم'}%0Aيرجى تزويدي بالبرنامج والتكلفة.`
+      : `Hello Rawaq Team 🌊, I want to create a custom tour:%0A- *Hours:* ${customHours}%0A- *Guests:* ${customGuests}%0A- *Places:* ${customPlaces || 'Your recommendation'}%0APlease send options.`;
+    
+    window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
+  };
+
   return (
-    <div dir={lang === 'ar' ? 'rtl' : 'ltr'} className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950">
+    <div dir={lang === 'ar' ? 'rtl' : 'ltr'} className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950 relative">
       
+      {/* Sticky Floating WhatsApp Button */}
+      <a
+        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lang === 'ar' ? 'مرحباً، أود الاستفسار عن الجولات السياحية والتجارب المتاحة في جدة.' : 'Hello, I would like to inquire about available tours in Jeddah.')}`}
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 left-6 z-50 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-4 rounded-full shadow-2xl flex items-center gap-2 border border-emerald-300 transition duration-300 hover:scale-105"
+      >
+        <span className="text-xl">💬</span>
+        <span className="text-xs font-black">{t.floatingWhatsapp}</span>
+      </a>
+
       {/* Header */}
-      <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
+      <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span className="text-3xl font-black bg-gradient-to-r from-amber-400 via-amber-200 to-emerald-400 bg-clip-text text-transparent">
-              {t.brandName}
-            </span>
-            <span className="text-xs text-slate-400 border-r border-l border-slate-800 px-2 font-light hidden sm:inline">
-              {t.brandSub}
-            </span>
+          <div className="flex items-center gap-3">
+            <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="48" fill="#020617" stroke="#F59E0B" strokeWidth="2" />
+              <circle cx="50" cy="38" r="14" fill="#F59E0B" />
+              <path d="M20 62C30 54 40 54 50 62C60 70 70 70 80 62" stroke="#10B981" strokeWidth="5" strokeLinecap="round" />
+            </svg>
+            <div className="flex flex-col">
+              <span className="text-2xl font-black bg-gradient-to-r from-amber-400 via-amber-200 to-emerald-400 bg-clip-text text-transparent leading-none">
+                {t.brandName}
+              </span>
+              <span className="text-[10px] text-slate-400 tracking-wider mt-1">{t.brandSub}</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">
@@ -265,11 +299,7 @@ export default function Home() {
             >
               🌐 {lang === 'ar' ? 'English' : 'عربي'}
             </button>
-
-            <a 
-              href="#booking" 
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-5 rounded-full transition duration-300 text-xs shadow-lg shadow-amber-500/10"
-            >
+            <a href="#booking" className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-5 rounded-full text-xs shadow-lg shadow-amber-500/10">
               {t.bookBtn}
             </a>
           </div>
@@ -291,38 +321,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust & Stats Section */}
-      <section className="border-b border-slate-800/60 bg-slate-900/30 py-10">
-        <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-4 text-center">
-          {t.trustStats.map((stat, i) => (
-            <div key={i} className="space-y-1">
-              <span className="block text-2xl md:text-4xl font-black text-amber-400">{stat.num}</span>
-              <span className="text-xs text-slate-400 font-light">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Packages Section (8 Packages Grid) */}
+      {/* Packages Section */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16 space-y-2">
+        <div className="text-center mb-12 space-y-2">
           <h2 className="text-3xl md:text-4xl font-bold text-white">{t.packagesTitle}</h2>
           <p className="text-slate-400 text-sm">{t.packagesSub}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {packages.map((pkg) => (
-            <div key={pkg.id} className="bg-slate-900/60 rounded-3xl border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/5 transition duration-500 group">
+            <div key={pkg.id} className="bg-slate-900/60 rounded-3xl border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-amber-500/40 hover:shadow-2xl transition duration-500 group">
               <div>
                 <div className="relative overflow-hidden">
-                  <img 
-                    src={pkg.image} 
-                    alt={pkg.title} 
-                    onError={(e) => {
-                      e.currentTarget.src = 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000';
-                    }}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100" 
-                  />
+                  <img src={pkg.image} alt={pkg.title} className="w-full h-48 object-cover group-hover:scale-105 transition duration-700" />
                   <span className="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/20 text-[10px] px-2.5 py-1 rounded-full font-medium">
                     {pkg.category}
                   </span>
@@ -333,133 +344,64 @@ export default function Home() {
                     <span className="text-amber-400 font-black text-xl">{pkg.price}</span>
                     <span className="text-[10px] font-normal text-slate-500 mx-1">{t.perPerson}</span>
                   </div>
-
-                  <p className="text-slate-400 text-xs mb-4 leading-relaxed font-light line-clamp-2">{pkg.description}</p>
-                  
-                  <div className="space-y-1.5 border-t border-slate-800/80 pt-3">
-                    {pkg.features.slice(0, 2).map((feat, idx) => (
-                      <div key={idx} className="text-[11px] text-slate-300 flex items-center gap-1.5">
-                        <span className="text-amber-400">✦</span> {feat}
-                      </div>
-                    ))}
-                  </div>
+                  <p className="text-slate-400 text-xs mb-4 leading-relaxed line-clamp-2">{pkg.description}</p>
                 </div>
               </div>
 
               <div className="p-5 pt-0 space-y-2">
-                <button
-                  onClick={() => setActiveModalPackage(pkg)}
-                  className="w-full bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-medium py-2 rounded-xl transition border border-slate-700/60"
-                >
+                <button onClick={() => setActiveModalPackage(pkg)} className="w-full bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-[11px] font-medium py-2 rounded-xl transition border border-slate-700/60">
                   {t.detailsBtn}
                 </button>
-                <a
-                  href="#booking"
-                  onClick={() => setSelectedPackage(pkg.title)}
-                  className="block text-center bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition duration-300"
-                >
+                <a href="#booking" onClick={() => setSelectedPackage(pkg.title)} className="block text-center bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition">
                   {t.selectPkgBtn}
                 </a>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Custom Tour Banner (صمم جولتك الخاص بنفسك) */}
+        <div className="bg-gradient-to-r from-amber-500/10 via-slate-900 to-emerald-500/10 border border-amber-500/30 rounded-3xl p-8 text-center max-w-4xl mx-auto space-y-4">
+          <h3 className="text-2xl font-bold text-white">{t.customTourTitle}</h3>
+          <p className="text-slate-300 text-xs max-w-xl mx-auto">{t.customTourSub}</p>
+          <button
+            onClick={() => setCustomModalOpen(true)}
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 px-8 rounded-full text-xs shadow-lg transition"
+          >
+            {t.customTourBtn}
+          </button>
+        </div>
       </section>
 
-      {/* Experience Details Modal */}
-      {activeModalPackage && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 space-y-6 relative shadow-2xl">
-            
-            <button 
-              onClick={() => setActiveModalPackage(null)}
-              className="absolute top-5 left-5 bg-slate-800 hover:bg-slate-700 text-slate-300 w-9 h-9 rounded-full flex items-center justify-center transition"
-            >
-              ✕
-            </button>
-
-            <div className="space-y-2">
-              <span className="text-xs text-amber-400 font-semibold px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/20">
-                {activeModalPackage.category}
-              </span>
-              <h3 className="text-2xl font-bold text-white mt-2">{activeModalPackage.title}</h3>
-              <p className="text-xs text-slate-300 font-medium">📍 {t.location} {activeModalPackage.locationName}</p>
-              
-              <a 
-                href={activeModalPackage.mapUrl} 
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-block text-xs text-emerald-400 underline font-semibold mt-1 hover:text-emerald-300"
-              >
-                {t.mapLink}
-              </a>
-            </div>
-
-            <img 
-              src={activeModalPackage.image} 
-              alt={activeModalPackage.title} 
-              className="w-full h-52 object-cover rounded-2xl border border-slate-800"
-            />
-
-            <div>
-              <h4 className="text-sm font-semibold text-amber-400 mb-2">{t.itineraryTitle}</h4>
-              <ul className="space-y-2 bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80">
-                {activeModalPackage.itinerary.map((step: string, i: number) => (
-                  <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
-                    <span>{step}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="pt-4 border-t border-slate-800 flex justify-between items-center">
+      {/* Custom Tour Modal */}
+      {customModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 space-y-5 relative">
+            <button onClick={() => setCustomModalOpen(false)} className="absolute top-4 left-4 text-slate-400 hover:text-white">✕</button>
+            <h3 className="text-xl font-bold text-white">{t.customTourTitle}</h3>
+            <form onSubmit={handleCustomTourSubmit} className="space-y-4">
               <div>
-                <span className="text-2xl font-black text-amber-400">{activeModalPackage.price} SAR</span>
+                <label className="block text-xs text-slate-300 mb-1">عدد الساعات المتوقعة:</label>
+                <input type="number" value={customHours} onChange={(e) => setCustomHours(e.target.value)} className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white" min="2" max="24" required />
               </div>
-              <a
-                href="#booking"
-                onClick={() => {
-                  setSelectedPackage(activeModalPackage.title);
-                  setActiveModalPackage(null);
-                }}
-                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition text-xs"
-              >
-                {t.selectPkgBtn}
-              </a>
-            </div>
-
+              <div>
+                <label className="block text-xs text-slate-300 mb-1">عدد الأشخاص:</label>
+                <input type="number" value={customGuests} onChange={(e) => setCustomGuests(parseInt(e.target.value) || 1)} className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white" min="1" required />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-300 mb-1">المعالم أو الأنشطة المطلوبة (اختياري):</label>
+                <textarea value={customPlaces} onChange={(e) => setCustomPlaces(e.target.value)} placeholder="مثلاً: جولة بحرية + زيارة البلد وتناول عشاء شعبي" className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white h-24" />
+              </div>
+              <button type="submit" className="w-full bg-emerald-500 text-slate-950 font-bold py-3.5 rounded-xl text-xs">
+                💬 إرسال الطلب عبر الواتساب
+              </button>
+            </form>
           </div>
         </div>
       )}
 
-      {/* Customer Reviews Section */}
-      <section className="bg-slate-900/30 border-t border-b border-slate-800/50 py-20 px-6">
-        <div className="max-w-5xl mx-auto space-y-12">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-3xl font-bold text-white">{t.reviewsTitle}</h2>
-            <p className="text-slate-400 text-xs">{t.reviewsSub}</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {t.reviews.map((rev, idx) => (
-              <div key={idx} className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-amber-400 text-xs font-bold">⭐⭐⭐⭐⭐ {rev.rating}</span>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed font-light">"{rev.comment}"</p>
-                <div className="border-t border-slate-800/60 pt-3">
-                  <span className="block text-xs font-bold text-white">{rev.name}</span>
-                  <span className="text-[10px] text-slate-500">{rev.role}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Booking Form Section */}
-      <section id="booking" className="py-20 px-6">
+      <section id="booking" className="py-20 px-6 bg-slate-900/30 border-t border-slate-800/50">
         <div className="max-w-2xl mx-auto bg-slate-900 rounded-3xl p-6 md:p-10 border border-slate-800 shadow-2xl">
           <div className="text-center mb-8 space-y-1">
             <h2 className="text-2xl md:text-3xl font-bold text-white">{t.bookingTitle}</h2>
@@ -469,11 +411,7 @@ export default function Home() {
           <form onSubmit={handleBooking} className="space-y-6">
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-2">{t.selectPackageLabel}</label>
-              <select 
-                value={selectedPackage}
-                onChange={(e) => setSelectedPackage(e.target.value)}
-                className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl focus:border-amber-500 text-slate-200 outline-none transition text-sm"
-              >
+              <select value={selectedPackage} onChange={(e) => setSelectedPackage(e.target.value)} className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 outline-none text-sm">
                 {packages.map(p => (
                   <option key={p.id} value={p.title}>{p.title} ({p.price} SAR)</option>
                 ))}
@@ -483,82 +421,37 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-2">{t.tripTypeLabel}</label>
-                <select 
-                  value={tripType}
-                  onChange={(e) => setTripType(e.target.value)}
-                  className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl focus:border-amber-500 text-slate-200 outline-none transition text-sm"
-                >
+                <select value={tripType} onChange={(e) => setTripType(e.target.value)} className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 outline-none text-sm">
                   <option value={t.shared}>{t.shared}</option>
                   <option value={t.private}>{t.private} (+150 SAR)</option>
                 </select>
               </div>
-
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-2">{t.guestsLabel}</label>
-                <input 
-                  type="number" 
-                  min="1" 
-                  max="30"
-                  value={guests} 
-                  onChange={(e) => setGuests(parseInt(e.target.value) || 1)}
-                  className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl focus:border-amber-500 text-slate-200 outline-none transition text-sm"
-                  required 
-                />
+                <input type="number" min="1" max="30" value={guests} onChange={(e) => setGuests(parseInt(e.target.value) || 1)} className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm" required />
               </div>
-
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-2">{t.dateLabel}</label>
-                <input 
-                  type="date" 
-                  value={date} 
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl focus:border-amber-500 text-slate-200 outline-none transition text-sm"
-                  required 
-                />
+                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm" required />
               </div>
             </div>
 
-            {/* الإضافات والترقيات بضمنها السكن */}
             <div className="border-t border-b border-slate-800/80 py-4 space-y-3">
               <span className="block text-xs font-medium text-slate-400">{t.extrasLabel}</span>
-              
-              <label className="flex items-center gap-3 cursor-pointer text-xs text-amber-400 font-semibold hover:text-amber-300">
-                <input 
-                  type="checkbox" 
-                  checked={includeHotel} 
-                  onChange={(e) => setIncludeHotel(e.target.checked)}
-                  className="w-4 h-4 accent-amber-500 rounded" 
-                />
+              <label className="flex items-center gap-3 cursor-pointer text-xs text-amber-400 font-semibold">
+                <input type="checkbox" checked={includeHotel} onChange={(e) => setIncludeHotel(e.target.checked)} className="w-4 h-4 accent-amber-500 rounded" />
                 🏨 {t.hotelOpt}
               </label>
-
-              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300 hover:text-white">
-                <input 
-                  type="checkbox" 
-                  checked={includeTransport} 
-                  onChange={(e) => setIncludeTransport(e.target.checked)}
-                  className="w-4 h-4 accent-amber-500 rounded" 
-                />
+              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300">
+                <input type="checkbox" checked={includeTransport} onChange={(e) => setIncludeTransport(e.target.checked)} className="w-4 h-4 accent-amber-500 rounded" />
                 {t.transportOpt}
               </label>
-
-              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300 hover:text-white">
-                <input 
-                  type="checkbox" 
-                  checked={includeMeal} 
-                  onChange={(e) => setIncludeMeal(e.target.checked)}
-                  className="w-4 h-4 accent-amber-500 rounded" 
-                />
+              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300">
+                <input type="checkbox" checked={includeMeal} onChange={(e) => setIncludeMeal(e.target.checked)} className="w-4 h-4 accent-amber-500 rounded" />
                 {t.mealOpt}
               </label>
-
-              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300 hover:text-white">
-                <input 
-                  type="checkbox" 
-                  checked={includeCoffee} 
-                  onChange={(e) => setIncludeCoffee(e.target.checked)}
-                  className="w-4 h-4 accent-amber-500 rounded" 
-                />
+              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300">
+                <input type="checkbox" checked={includeCoffee} onChange={(e) => setIncludeCoffee(e.target.checked)} className="w-4 h-4 accent-amber-500 rounded" />
                 {t.coffeeOpt}
               </label>
             </div>
@@ -571,10 +464,7 @@ export default function Home() {
               <span className="text-3xl font-black text-amber-400">{totalPrice} <span className="text-xs font-normal text-slate-400">SAR</span></span>
             </div>
 
-            <button 
-              type="submit"
-              className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 rounded-xl shadow-lg transition duration-300 flex items-center justify-center gap-2 text-sm"
-            >
+            <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
               {t.whatsappBtn}
             </button>
           </form>
