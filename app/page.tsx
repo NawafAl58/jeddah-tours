@@ -126,7 +126,7 @@ export default function Home() {
       title: lang === 'ar' ? 'أسرار جدة التاريخية (البلد)' : 'Historic Jeddah Secrets (Al-Balad)',
       price: 220,
       category: lang === 'ar' ? 'تراث وثقافة' : 'Heritage & Culture',
-      image: 'https://images.unsplash.com/photo-1578895210405-907db48a7812?q=80&w=1000&auto=format&fit=crop',
+      image: 'https://scth.scene7.com/is/image/scth/albalad-jeddah:crop-760x570?defaultImage=albalad-jeddah',
       description: lang === 'ar' ? 'رحلة استكشافية بين أزقة البلد التراثية، زيارة البيوت والمتاحف التاريخية، وتذوق المأكولات الشعبية.' : 'Guided walking tour through historic UNESCO heritage alleys, old houses, museums and local street food.',
       features: lang === 'ar' ? ['مرشد سياحي مرخص', 'تذاكر المتاحف والبيوت', 'تذوق المأكولات الشعبية', 'ضيافة القهوة العربية'] : ['Licensed Tour Guide', 'Museum Tickets', 'Street Food Tasting', 'Arabic Coffee'],
       locationName: lang === 'ar' ? 'جدة التاريخية - بوابة باب جديد' : 'Historic Jeddah - Bab Jadeed Gate',
