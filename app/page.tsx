@@ -3,13 +3,10 @@
 import React, { useState } from 'react';
 
 export default function Home() {
-  // باقي الكود...
-export default function Home() {
   const [selectedPackage, setSelectedPackage] = useState('أبحر البحرية');
   const [guests, setGuests] = useState(1);
   const [date, setDate] = useState('');
 
-  // بيانات البكجات لتعديلها بسهولة
   const packages = [
     {
       id: 'abhur',
@@ -29,14 +26,12 @@ export default function Home() {
     }
   ];
 
-  // حساب التكلفة الإجمالية
   const currentPkg = packages.find(p => p.title === selectedPackage) || packages[0];
   const totalPrice = currentPkg.price * guests;
 
-  // رقم الواتساب الخاص بكم (استبدل الرقم برقمكم الرسمي مع رمز الدولة 966)
-  const whatsappNumber = '966500000000';
+  const whatsappNumber = '966500000000'; // ضع رقمك هنا مع المفتاح الدولي
 
-  const handleBooking = (e) => {
+  const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
     const message = `مرحباً، أود حجز رحلة معكم:%0A- *البكج:* ${selectedPackage}%0A- *عدد الأشخاص:* ${guests}%0A- *التاريخ:* ${date}%0A- *الإجمالي:* ${totalPrice} ريال%0Aيرجى تأكيد الحجز وتزويدي بالتفاصيل.`;
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
@@ -44,8 +39,6 @@ export default function Home() {
 
   return (
     <div dir="rtl" className="min-h-screen bg-slate-50 text-slate-800 font-sans">
-      
-      {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-2xl font-black text-blue-600 tracking-wide">
@@ -60,7 +53,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-900 to-indigo-800 text-white py-20 px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
           <span className="bg-blue-500/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">
@@ -75,7 +67,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Packages Section */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-slate-900">الباقات المتاحة</h2>
@@ -120,7 +111,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Booking Form Section */}
       <section id="booking" className="bg-slate-100 py-16 px-4">
         <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-md p-8 border border-slate-200">
           <h2 className="text-2xl font-bold text-center mb-2">تأكيد حجز الرحلة</h2>
@@ -181,11 +171,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
         <p>© {new Date().getFullYear()} جولة جدة. جميع الحقوق محفوظة.</p>
       </footer>
-
     </div>
   );
 }
