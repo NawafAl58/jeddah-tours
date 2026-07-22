@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "روّق | تجارب جدة السياحية - Rawaq Jeddah Tours",
   description: "احجز أفضل الجولات والتجارب السياحية والبحرية والتراثية في جدة مباشرة عبر الواتساب. جولات البحر الأحمر، الغوص، وأسرار جدة التاريخية (البلد).",
   keywords: ["جدة", "تشارم جدة", "تجارب سياحية جدة", "غوص أبحر", "البلد جدة", "Jeddah Tours", "روق"],
-  metadataBase: new URL('https://rawaq-jeddah.vercel.app'), // استبدل بدومينك الحقيقي
+  metadataBase: new URL('https://jeddah-tours.vercel.app/#booking'), // استبدل بدومينك الحقيقي
   openGraph: {
     title: "روّق | تجارب جدة السياحية - Rawaq Jeddah Tours",
     description: "استكشف عروس البحر الأحمر بجولات حصرية وخبرات محلية. احجز الآن جولتك البحرية أو التراثية عبر الواتساب.",
