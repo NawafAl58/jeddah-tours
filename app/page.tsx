@@ -10,29 +10,28 @@ export default function Home() {
   const [date, setDate] = useState('');
   const [tripType, setTripType] = useState('مشتركة');
   
+  // الإضافات الاختيارية (بما فيها خيار السكن الجديد)
+  const [includeHotel, setIncludeHotel] = useState(false);
   const [includeTransport, setIncludeTransport] = useState(false);
   const [includeMeal, setIncludeMeal] = useState(false);
   const [includeCoffee, setIncludeCoffee] = useState(false);
 
-  // النصوص باللغتين
   const t = {
     ar: {
       brandName: "روّق",
       brandSub: "تجارب جدة السياحية",
       heroBadge: "وجهتك الأولى لتجارب البحر والتراث والأنشطة 🌊",
       heroTitle: "روّق واكتشف جدة بشغف جديد",
-      heroDesc: "نحزم لك أفضل لحظات عروس البحر الأحمر في باقات وسياحة تجريبية حصرية صُممت خصيصاً لتصنع لك ذكريات استثنائية.",
+      heroDesc: "نحزم لك أفضل لحظات عروس البحر الأحمر في 8 باقات حصرية صُممت خصيصاً لتصنع لك ذكريات استثنائية.",
       bookBtn: "احجز تجربتك",
-      packagesTitle: "الباقات والتجارب المتاحة",
-      packagesSub: "اضغط على التفاصيل وجدول الرحلة للاطلاع على البرنامج والموقع الخريطة",
+      packagesTitle: "الباقات والتجارب المتاحة (8 باقات)",
+      packagesSub: "اضغط على التفاصيل وجدول الرحلة للاطلاع على البرنامج والموقع على الخريطة",
       detailsBtn: "🔍 التفاصيل وجدول الرحلة",
       selectPkgBtn: "حجز هذه التجربة",
       perPerson: "ريال / للشخص",
       location: "الموقع ونقطة التجمع:",
       mapLink: "🗺️ فتح الموقع على خرائط جوجل",
       itineraryTitle: "🗓️ جدول وتفاصيل البرنامج:",
-      includesTitle: "الباقة تشمل:",
-      rulesTitle: "الشروط والتوجيهات:",
       bookingTitle: "تأكيد حجز الرحلة",
       bookingSub: "حدد خياراتك وسيتم تحويلك مباشرة للواتساب لتأكيد الحجز",
       selectPackageLabel: "الباقة المختارة",
@@ -41,12 +40,13 @@ export default function Home() {
       private: "خاصة (VIP)",
       guestsLabel: "عدد الأشخاص",
       dateLabel: "تاريخ الرحلة",
-      extrasLabel: "خدمات ترقية إضافية (اختياري):",
+      extrasLabel: "خدمات ترقية وإضافات (اختياري):",
+      hotelOpt: "إضافة إقامة وفندق 4-5 نجوم شامل الإفطار (+350 ريال/شخص)",
       transportOpt: "مواصلات خاصة وسيارة حديثة من وإلى الفندق (+80 ريال/شخص)",
       mealOpt: "وجبة غداء/عشاء فاخرة (مأكولات بحرية أو شعبية) (+120 ريال/شخص)",
       coffeeOpt: "ضيافة القهوة المختصة والحلى الجداوي التراثي (+45 ريال/شخص)",
       totalEstimated: "المبلغ الإجمالي المتوقع:",
-      totalSub: "شامل كافة الخيارات المختارة",
+      totalSub: "شامل كافة الخيارات المحددة",
       whatsappBtn: "💬 تأكيد الحجز المباشر عبر الواتساب",
       trustStats: [
         { num: "+1,200", label: "سائح ومغامر سعيد" },
@@ -56,9 +56,9 @@ export default function Home() {
       reviewsTitle: "آراء وانطباعات الزوار",
       reviewsSub: "ماذا يقول عملاؤنا عن تجاربهم معنا في جدة",
       reviews: [
-        { name: "عبدالله الجعيد", role: "زائر من الرياض", comment: "رحلة أبحر كانت فوق الخيال! الكابتن ممتاز والتنظيم احترافي جداً وسريعين بالواتساب.", rating: "5/5" },
-        { name: "Sarah Jenkins", role: "Tourist from UK", comment: "The Al-Balad tour was the highlight of my trip to Saudi Arabia. Authentic and very safe!", rating: "5/5" },
-        { name: "فهد الشهري", role: "رحلة عائلية", comment: "تجربة غروب الشمس والكاياك روعة ولذيذة الضيافة، يعطيهم العافية فريق روّق.", rating: "5/5" }
+        { name: "عبدالله الجعيد", role: "زائر من الرياض", comment: "تنظيم احترافي جداً، وإضافة خيار السكن والمواصلات ريحتنا من هم التنسيق!", rating: "5/5" },
+        { name: "Sarah Jenkins", role: "Tourist from UK", comment: "The Al-Balad tour & Obhur boat experience were pure magic. Highly recommended!", rating: "5/5" },
+        { name: "فهد الشهري", role: "رحلة عائلية", comment: "الباقات متنوعة والأسعار ممتازة والتفاعل سريع عبر الواتساب.", rating: "5/5" }
       ]
     },
     en: {
@@ -66,9 +66,9 @@ export default function Home() {
       brandSub: "Jeddah Tourism Experiences",
       heroBadge: "Your Top Choice for Sea & Heritage Adventures 🌊",
       heroTitle: "Rawaq – Discover Jeddah with Passion",
-      heroDesc: "Curated Red Sea marine tours and authentic cultural journeys designed to give you unforgettable memories.",
+      heroDesc: "Curated Red Sea marine tours and authentic cultural journeys across 8 exclusive packages.",
       bookBtn: "Book Now",
-      packagesTitle: "Available Experiences & Packages",
+      packagesTitle: "Available Experiences & Packages (8 Packages)",
       packagesSub: "Click 'Details & Itinerary' to view full program and exact GPS map location",
       detailsBtn: "🔍 Details & Itinerary",
       selectPkgBtn: "Book This Experience",
@@ -76,8 +76,6 @@ export default function Home() {
       location: "Meeting Point Location:",
       mapLink: "🗺️ Open Location on Google Maps",
       itineraryTitle: "🗓️ Program Schedule & Itinerary:",
-      includesTitle: "Package Includes:",
-      rulesTitle: "Rules & Guidelines:",
       bookingTitle: "Confirm Your Reservation",
       bookingSub: "Select your options and you will be directed to WhatsApp for instant confirmation",
       selectPackageLabel: "Selected Package",
@@ -86,7 +84,8 @@ export default function Home() {
       private: "Private (VIP)",
       guestsLabel: "Number of Guests",
       dateLabel: "Tour Date",
-      extrasLabel: "Optional Upgrades:",
+      extrasLabel: "Optional Upgrades & Add-ons:",
+      hotelOpt: "Add 4-5 Star Hotel Stay with breakfast (+350 SAR/person)",
       transportOpt: "Private modern hotel transport (+80 SAR/person)",
       mealOpt: "Luxury lunch/dinner meal (Seafood/Traditional) (+120 SAR/person)",
       coffeeOpt: "Specialty coffee & traditional Hijazi desserts (+45 SAR/person)",
@@ -101,13 +100,14 @@ export default function Home() {
       reviewsTitle: "Visitor Testimonials",
       reviewsSub: "What our guests say about their experiences with us in Jeddah",
       reviews: [
-        { name: "Abdullah Al-Juaid", role: "Visitor from Riyadh", comment: "The Abhur trip was beyond expectations! The captain was amazing and organization was top notch.", rating: "5/5" },
-        { name: "Sarah Jenkins", role: "Tourist from UK", comment: "The Al-Balad tour was the highlight of my trip to Saudi Arabia. Authentic and very safe!", rating: "5/5" },
-        { name: "Fahad Al-Shehri", role: "Family Trip", comment: "Sunset and kayaking experience was breathtaking. Thanks Rawaq team!", rating: "5/5" }
+        { name: "Abdullah Al-Juaid", role: "Visitor from Riyadh", comment: "Great organization, adding hotel and transport saved us so much effort!", rating: "5/5" },
+        { name: "Sarah Jenkins", role: "Tourist from UK", comment: "The Al-Balad tour & Obhur boat experience were pure magic. Highly recommended!", rating: "5/5" },
+        { name: "Fahad Al-Shehri", role: "Family Trip", comment: "Great package diversity and very fast communication via WhatsApp.", rating: "5/5" }
       ]
     }
   }[lang];
 
+  // قائمة الباقات الـ 8 الكاملة
   const packages = [
     {
       id: 'abhur',
@@ -119,20 +119,7 @@ export default function Home() {
       features: lang === 'ar' ? ['قارب حديث ومجهز', 'معدات غوص وسنوركلينج', 'كابتن ومرشد بحري', 'مشروبات باردة وسناك'] : ['Modern Boat', 'Diving & Snorkeling Gear', 'Licensed Captain', 'Snacks & Drinks'],
       locationName: lang === 'ar' ? 'مرسى أبحر الشمالية، جدة' : 'North Obhur Marina, Jeddah',
       mapUrl: 'https://maps.google.com/?q=North+Obhur+Marina+Jeddah',
-      itinerary: lang === 'ar' ? [
-        '14:00 - التجمع في مرسى أبحر والانطلاق بالقارب',
-        '14:45 - الوصول لموقع الغوص وشرح تعليمات السلامة',
-        '15:15 - السباحة، السنوركلينج، وتجربة الغوص مع المدرب',
-        '17:30 - الاسترخاء ومشاهدة الغروب من القارب',
-        '18:30 - العودة للمرسى'
-      ] : [
-        '14:00 - Meeting at Marina & Boarding',
-        '14:45 - Arrival at diving spot & safety brief',
-        '15:15 - Swimming, Snorkeling & Diving',
-        '17:30 - Relaxing & Sunset view from boat',
-        '18:30 - Return to Marina'
-      ],
-      rules: lang === 'ar' ? 'يلزم إحضار الهوية الوطنية أو الإقامة/الجواز.' : 'National ID / Passport required.'
+      itinerary: lang === 'ar' ? ['14:00 - التجمع والانطلاق', '15:15 - السباحة والغوص', '17:30 - الاسترخاء ومشاهدة الغروب'] : ['14:00 - Meeting & Boarding', '15:15 - Swimming & Diving', '17:30 - Sunset view']
     },
     {
       id: 'balad',
@@ -144,20 +131,7 @@ export default function Home() {
       features: lang === 'ar' ? ['مرشد سياحي مرخص', 'تذاكر المتاحف والبيوت', 'تذوق المأكولات الشعبية', 'ضيافة القهوة العربية'] : ['Licensed Tour Guide', 'Museum Tickets', 'Street Food Tasting', 'Arabic Coffee'],
       locationName: lang === 'ar' ? 'جدة التاريخية - بوابة باب جديد' : 'Historic Jeddah - Bab Jadeed Gate',
       mapUrl: 'https://maps.google.com/?q=Bab+Jadeed+Historic+Jeddah',
-      itinerary: lang === 'ar' ? [
-        '17:00 - التجمع في منطقة باب جديد وبداية الجولة',
-        '17:30 - زيارة بيت نصيف ومتحف المطبك',
-        '18:45 - جولة في الأسواق الشعبية القديمة',
-        '19:30 - توقف لتذوق الكبدة الجداوية والبليلة',
-        '20:15 - ختم الرحلة بجلسة مقهى تراثي'
-      ] : [
-        '17:00 - Gathering at Bab Jadeed Gate',
-        '17:30 - Visiting Nassif House & Museums',
-        '18:45 - Exploring old traditional souks',
-        '19:30 - Traditional street food tasting',
-        '20:15 - Traditional cafe session'
-      ],
-      rules: lang === 'ar' ? 'الجولة تتطلب المشي، يفضل ارتداء أحذية مريحة.' : 'Walking tour, comfortable shoes recommended.'
+      itinerary: lang === 'ar' ? ['17:00 - التجمع في باب جديد', '17:30 - زيارة البيوت والمتاحف', '19:30 - تجربة المأكولات الشعبية'] : ['17:00 - Gathering at Gate', '17:30 - Museums tour', '19:30 - Local food tasting']
     },
     {
       id: 'corniche',
@@ -169,18 +143,67 @@ export default function Home() {
       features: lang === 'ar' ? ['جولة بسيارة حديثة', 'زيارة نادي اليخوت', 'مرشد سياحي محلي', 'تذاكر المعالم'] : ['Modern Car Tour', 'Yacht Club Access', 'Local Guide', 'Sightseeing Tickets'],
       locationName: lang === 'ar' ? 'الكورنيش الشمالي - نادي اليخوت' : 'North Corniche - Jeddah Yacht Club',
       mapUrl: 'https://maps.google.com/?q=Jeddah+Yacht+Club',
-      itinerary: lang === 'ar' ? [
-        '16:30 - الجولة بالسيارة الفاخرة على طول الكورنيش',
-        '17:15 - زيارة نادي اليخوت وممشى المارينا',
-        '18:30 - التوقف عند ممشى حلبة الفورمولا 1',
-        '19:30 - الاستمتاع بوجبة خفيفة مطلة على البحر'
-      ] : [
-        '16:30 - Scenic drive along New Corniche',
-        '17:15 - Jeddah Yacht Club & Marina walk',
-        '18:30 - F1 Circuit walkway photo stop',
-        '19:30 - Sea view dining session'
-      ],
-      rules: lang === 'ar' ? 'مناسبة للعائلات والأفراد من كافة الأعمار.' : 'Suitable for families and all ages.'
+      itinerary: lang === 'ar' ? ['16:30 - جولة الكورنيش', '17:15 - نادي اليخوت والمارينا', '18:30 - ممشى الفورمولا 1'] : ['16:30 - Corniche drive', '17:15 - Yacht Club walk', '18:30 - F1 Track walkway']
+    },
+    {
+      id: 'sunset',
+      title: lang === 'ar' ? 'استجمام غروب الشمس والكاياك' : 'Sunset Beach & Kayak Experience',
+      price: 350,
+      category: lang === 'ar' ? 'استرخاء ومغامرة' : 'Relaxation & Adventure',
+      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop',
+      description: lang === 'ar' ? 'جلسة خاصة ومجهزة على الشاطئ لحظة الغروب، أنشطة التجديف البحري (Kayak)، ومشروبات منعشة.' : 'Private beach seating at sunset, kayaking activities, and refreshing drinks.',
+      features: lang === 'ar' ? ['جلسة شاطئية VIP', 'قوارب الكاياك وتجديف', 'سترات نجاة ومدرب', 'مشروبات باردة ودافئة'] : ['VIP Beach Lounge', 'Kayaking & Gear', 'Safety Life Vests', 'Cold/Hot Drinks'],
+      locationName: lang === 'ar' ? 'شاطئ شارات أورينت - أبحر' : 'Sharat Orient Beach - Obhur',
+      mapUrl: 'https://maps.google.com/?q=Obhur+Beach+Jeddah',
+      itinerary: lang === 'ar' ? ['16:00 - تجهيز الجلسة الشاطئية', '16:30 - التجديف بالكاياك', '17:45 - تأمل لحظة الغروب'] : ['16:00 - Beach lounge setup', '16:30 - Kayaking', '17:45 - Sunset view']
+    },
+    {
+      id: 'yacht',
+      title: lang === 'ar' ? 'جولة اليخت الفاخر والجزر النائية' : 'Luxury Yacht & Offshore Islands',
+      price: 750,
+      category: lang === 'ar' ? 'VIP وفخامة' : 'VIP & Luxury',
+      image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1000&auto=format&fit=crop',
+      description: lang === 'ar' ? 'رحلة بحرية فاخرة على متن يخت حديث إلى شِعاب وجزر البحر الأحمر المفتوحة مع بوفيه مأكولات بحرية.' : 'Luxury yacht cruise to open Red Sea coral islands with open seafood buffet.',
+      features: lang === 'ar' ? ['يخت VIP مجهز بالكامل', 'وجبة بوفيه بحري طازج', 'أنشطة سباحة وجت سكي', 'طاقم خدمة احترافي'] : ['Fully Equipped Yacht', 'Fresh Seafood Buffet', 'Jet Ski & Swimming', 'Professional Crew'],
+      locationName: lang === 'ar' ? 'مرسى الأحلام - جدة' : 'Al-Ahlam Marina, Jeddah',
+      mapUrl: 'https://maps.google.com/?q=Al+Ahlam+Marina+Jeddah',
+      itinerary: lang === 'ar' ? ['10:00 - الإنطلاق باليخت', '13:30 - بوفيه المأكولات البحرية', '15:00 - الألعاب المائية'] : ['10:00 - Yacht Departure', '13:30 - Seafood Buffet', '15:00 - Water sports']
+    },
+    {
+      id: 'safari',
+      title: lang === 'ar' ? 'سفاري وتخييم صحراء جدة' : 'Jeddah Desert Safari & Camping',
+      price: 290,
+      category: lang === 'ar' ? 'صحراء ومغامرة' : 'Desert & Safari',
+      image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop',
+      description: lang === 'ar' ? 'تجربة قيادة سيارات الدفع الرباعي على الكثبان الرملية، التخييم الشعبي، ومراقبة النجوم مع العشاء.' : '4x4 dune bashing adventure, traditional desert camp setup, stargazing and BBQ dinner.',
+      features: lang === 'ar' ? ['سيارات 4x4 مع سائقين', 'تطعيس على الرمال', 'مخيم بساط شعبي', 'عشاء مشويات طازج'] : ['4x4 Dune Bashing', 'Desert Camp Setup', 'BBQ Dinner', 'Stargazing'],
+      locationName: lang === 'ar' ? 'صحراء جدة - وادي قديح' : 'Jeddah Desert - Qadid Valley',
+      mapUrl: 'https://maps.google.com/?q=Jeddah+Desert+Safari',
+      itinerary: lang === 'ar' ? ['15:30 - الانطلاق بدفع رباعي', '16:30 - مغامرة التطعيس', '19:30 - العشاء حول النار'] : ['15:30 - 4x4 Departure', '16:30 - Dune Bashing', '19:30 - Campfire BBQ']
+    },
+    {
+      id: 'shopping',
+      title: lang === 'ar' ? 'جولة التسوق الفاخر والمطاعم العالمية' : 'Luxury Shopping & Fine Dining Tour',
+      price: 260,
+      category: lang === 'ar' ? 'تسوق وأسلوب حياة' : 'Shopping & Lifestyle',
+      image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1000&auto=format&fit=crop',
+      description: lang === 'ar' ? 'جولة في أشهر مجمعات جدة الفاخرة (Red Sea Mall & Boulevard)، حجز مطاعم عالمية ومساعد تسوق شخصي.' : 'Guided VIP tour in Jeddah’s premier shopping malls & boulevards with fine dining reservations.',
+      features: lang === 'ar' ? ['سيارة خاصة وتوصيل', 'مساعد تسوق محلي', 'حجوزات مطاعم معتمدة', 'خصومات تجارية'] : ['Private Transport', 'Personal Shopping Guide', 'VIP Dining Booking', 'Shopping Discounts'],
+      locationName: lang === 'ar' ? 'مول رد سي - جدة' : 'Red Sea Mall, Jeddah',
+      mapUrl: 'https://maps.google.com/?q=Red+Sea+Mall+Jeddah',
+      itinerary: lang === 'ar' ? ['16:00 - جولة المجمعات الفاخرة', '18:30 - استراحة القهوة والبوليفارد', '20:00 - عشاء فاخر'] : ['16:00 - Mall & Luxury Tour', '18:30 - Boulevard Coffee', '20:00 - Fine Dining']
+    },
+    {
+      id: 'coral_island',
+      title: lang === 'ar' ? 'رحلة جزر المرجان والأنشطة المائية' : 'Coral Reef Island & Water Activities',
+      price: 490,
+      category: lang === 'ar' ? 'أنشطة بحرية' : 'Marine Activity',
+      image: 'https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=1000&auto=format&fit=crop',
+      description: lang === 'ar' ? 'انطلاق إلى أبعد نقطة مرجانية في جدة، ركوب البانانا بوت، السنوركلينج واستكشاف الأحياء البحرية.' : 'Expedition to deep reef islands, banana boat rides, snorkeling and underwater life exploration.',
+      features: lang === 'ar' ? ['قارب سريع سريع', 'أنشطة بانانا ودونات', 'وجبة غداء خفيفة', 'تصوير عالي الدقة'] : ['Speed Boat Expedition', 'Banana Boat & Towables', 'Light Lunch', 'HD Photography'],
+      locationName: lang === 'ar' ? 'مرسى مارينا أبحر - جدة' : 'Obhur Marina Hub, Jeddah',
+      mapUrl: 'https://maps.google.com/?q=Obhur+Marina+Jeddah',
+      itinerary: lang === 'ar' ? ['09:00 - الانطلاق للجزر النائية', '11:00 - الألعاب المائية والبانانا', '13:00 - الغداء على الشاطئ'] : ['09:00 - Departure to Reef Island', '11:00 - Banana boat activities', '13:00 - Island Lunch']
     }
   ];
 
@@ -191,11 +214,13 @@ export default function Home() {
     basePrice += 150;
   }
 
+  // حساب التكاليف والإضافات
+  const hotelCost = includeHotel ? 350 : 0;
   const transportCost = includeTransport ? 80 : 0;
   const mealCost = includeMeal ? 120 : 0;
   const coffeeCost = includeCoffee ? 45 : 0;
 
-  const pricePerPerson = basePrice + transportCost + mealCost + coffeeCost;
+  const pricePerPerson = basePrice + hotelCost + transportCost + mealCost + coffeeCost;
   const totalPrice = pricePerPerson * guests;
 
   const whatsappNumber = '966500000000'; // ضع رقم الواتساب الرسمي هنا
@@ -204,6 +229,7 @@ export default function Home() {
     e.preventDefault();
     
     let extrasList: string[] = [];
+    if (includeHotel) extrasList.push(lang === 'ar' ? 'سكن وفندق (+350 ريال)' : 'Hotel Stay (+350 SAR)');
     if (includeTransport) extrasList.push(lang === 'ar' ? 'مواصلات خاصة (+80 ريال)' : 'Private Transport (+80 SAR)');
     if (includeMeal) extrasList.push(lang === 'ar' ? 'وجبة فاخرة (+120 ريال)' : 'Luxury Meal (+120 SAR)');
     if (includeCoffee) extrasList.push(lang === 'ar' ? 'ضيافة قهوة وحلى (+45 ريال)' : 'Coffee & Dessert (+45 SAR)');
@@ -233,7 +259,6 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Language Switcher Button */}
             <button
               onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
               className="bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/30 text-xs px-3 py-2 rounded-full transition font-semibold"
@@ -278,14 +303,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Packages Section */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      {/* Packages Section (8 Packages Grid) */}
+      <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="text-center mb-16 space-y-2">
           <h2 className="text-3xl md:text-4xl font-bold text-white">{t.packagesTitle}</h2>
           <p className="text-slate-400 text-sm">{t.packagesSub}</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {packages.map((pkg) => (
             <div key={pkg.id} className="bg-slate-900/60 rounded-3xl border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/5 transition duration-500 group">
               <div>
@@ -296,24 +321,24 @@ export default function Home() {
                     onError={(e) => {
                       e.currentTarget.src = 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000';
                     }}
-                    className="w-full h-52 object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100" 
+                    className="w-full h-48 object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100" 
                   />
-                  <span className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/20 text-xs px-3 py-1 rounded-full font-medium">
+                  <span className="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/20 text-[10px] px-2.5 py-1 rounded-full font-medium">
                     {pkg.category}
                   </span>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition">{pkg.title}</h3>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-amber-400 transition line-clamp-1">{pkg.title}</h3>
                   <div className="mb-3">
-                    <span className="text-amber-400 font-black text-2xl">{pkg.price}</span>
-                    <span className="text-xs font-normal text-slate-500 mx-1">{t.perPerson}</span>
+                    <span className="text-amber-400 font-black text-xl">{pkg.price}</span>
+                    <span className="text-[10px] font-normal text-slate-500 mx-1">{t.perPerson}</span>
                   </div>
 
                   <p className="text-slate-400 text-xs mb-4 leading-relaxed font-light line-clamp-2">{pkg.description}</p>
                   
-                  <div className="space-y-2 border-t border-slate-800/80 pt-3">
-                    {pkg.features.slice(0, 3).map((feat, idx) => (
-                      <div key={idx} className="text-xs text-slate-300 flex items-center gap-2">
+                  <div className="space-y-1.5 border-t border-slate-800/80 pt-3">
+                    {pkg.features.slice(0, 2).map((feat, idx) => (
+                      <div key={idx} className="text-[11px] text-slate-300 flex items-center gap-1.5">
                         <span className="text-amber-400">✦</span> {feat}
                       </div>
                     ))}
@@ -321,17 +346,17 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-6 pt-0 space-y-2">
+              <div className="p-5 pt-0 space-y-2">
                 <button
                   onClick={() => setActiveModalPackage(pkg)}
-                  className="w-full bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium py-2.5 rounded-xl transition border border-slate-700/60"
+                  className="w-full bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-medium py-2 rounded-xl transition border border-slate-700/60"
                 >
                   {t.detailsBtn}
                 </button>
                 <a
                   href="#booking"
                   onClick={() => setSelectedPackage(pkg.title)}
-                  className="block text-center bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-3 rounded-xl transition duration-300"
+                  className="block text-center bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition duration-300"
                 >
                   {t.selectPkgBtn}
                 </a>
@@ -341,7 +366,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experience Details Modal with Google Map */}
+      {/* Experience Details Modal */}
       {activeModalPackage && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 space-y-6 relative shadow-2xl">
@@ -493,9 +518,20 @@ export default function Home() {
               </div>
             </div>
 
+            {/* الإضافات والترقيات بضمنها السكن */}
             <div className="border-t border-b border-slate-800/80 py-4 space-y-3">
               <span className="block text-xs font-medium text-slate-400">{t.extrasLabel}</span>
               
+              <label className="flex items-center gap-3 cursor-pointer text-xs text-amber-400 font-semibold hover:text-amber-300">
+                <input 
+                  type="checkbox" 
+                  checked={includeHotel} 
+                  onChange={(e) => setIncludeHotel(e.target.checked)}
+                  className="w-4 h-4 accent-amber-500 rounded" 
+                />
+                🏨 {t.hotelOpt}
+              </label>
+
               <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-300 hover:text-white">
                 <input 
                   type="checkbox" 
