@@ -436,18 +436,71 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative py-24 px-6 text-center border-b border-slate-800/50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <span className="inline-block bg-amber-500/10 text-amber-400 text-xs font-medium px-4 py-1.5 rounded-full border border-amber-500/20">
-            {t.heroBadge}
+   {/* Hero Section المطور بالحيوية والصور وأزرار التفاعل */}
+      <section className="relative py-28 px-6 text-center border-b border-slate-800/50 overflow-hidden">
+        
+        {/* خلفية سينمائية ناعمة مع Overlay داكن للحفاظ على وضوح النصوص */}
+        <div className="absolute inset-0 z-0 opacity-20 bg-cover bg-center transition-all duration-1000 scale-105" 
+             style={{ backgroundImage: "url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1600&auto=format&fit=crop')" }}>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/95 to-slate-950 z-0"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto space-y-8">
+          
+          {/* Badge الهوية */}
+          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 text-amber-400 text-xs font-semibold px-4 py-2 rounded-full border border-amber-500/30 backdrop-blur-md shadow-lg shadow-amber-500/5">
+            <span>✨</span> {t.heroBadge}
           </span>
-          <h1 className="text-4xl md:text-6xl font-black leading-tight text-white tracking-tight">
+
+          {/* العنوان الرئيسي */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight text-white tracking-tight">
             {t.heroTitle}
           </h1>
-          <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+
+          {/* الوصف */}
+          <p className="text-sm md:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
             {t.heroDesc}
           </p>
+
+          {/* 🔥 أزرار التفاعل (CTA Buttons) التي كانت مفقودة */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <a 
+              href="#packages"
+              className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black px-8 py-4 rounded-full text-xs md:text-sm shadow-xl shadow-amber-500/20 transition duration-300 transform hover:-translate-y-0.5"
+            >
+              🌊 {t.bookBtn}
+            </a>
+            
+            <button
+              onClick={() => setCustomModalOpen(true)}
+              className="w-full sm:w-auto bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold px-8 py-4 rounded-full text-xs md:text-sm border border-slate-700/80 backdrop-blur-md transition duration-300"
+            >
+              🎨 {t.customTourBtn}
+            </button>
+          </div>
+
+          {/* شارة حجز حيّة تشجع الزائر */}
+          <div className="pt-4 flex items-center justify-center gap-3 text-xs text-slate-400 font-light">
+            <div className="flex -space-x-2 space-x-reverse overflow-hidden">
+              <img className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-950" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100" alt="user" />
+              <img className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-950" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100" alt="user" />
+              <img className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-950" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100" alt="user" />
+            </div>
+            <span>انضم لأكثر من <strong className="text-amber-400 font-bold">+1,200</strong> زائر استمتعوا بتجاربنا في جدة</span>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Trust & Stats Section */}
+      <section className="border-b border-slate-800/60 bg-slate-900/40 py-10 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-4 text-center">
+          {t.trustStats.map((stat, i) => (
+            <div key={i} className="space-y-1">
+              <span className="block text-2xl md:text-4xl font-black bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">{stat.num}</span>
+              <span className="text-xs text-slate-400 font-light">{stat.label}</span>
+            </div>
+          ))}
         </div>
       </section>
 
