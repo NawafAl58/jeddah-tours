@@ -21,7 +21,7 @@ export default function Home() {
   const [customPlaces, setCustomPlaces] = useState('');
   const [customGuests, setCustomGuests] = useState(2);
 
-  const whatsappNumber = '966500000000'; // ضع رقم الواتساب الرسمي هنا
+  const whatsappNumber = '966580083838'; // ضع رقم الواتساب الرسمي هنا
 
   const t = {
     ar: {
