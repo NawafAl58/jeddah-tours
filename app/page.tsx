@@ -25,7 +25,7 @@ export default function Home() {
       title: 'أسرار جدة التاريخية (البلد)',
       price: 250,
       category: 'تراث وثقافة',
-      image: 'https://images.unsplash.com/photo-1565552070098-013a29774643?q=80&w=1000&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1578895210405-907db48a7812?q=80&w=1000&auto=format&fit=crop',
       description: 'رحلة استكشافية بين أزقة البلد التراثية، زيارة البيوت والمتاحف التاريخية، مع تجربة الأكلات الشعبية.',
       features: ['مرشد سياحي مرخص', 'دخول المتاحف والبيوت', 'وجبة شعبية جداوية', 'قهوة عربية وحلى']
     },
@@ -34,7 +34,7 @@ export default function Home() {
       title: 'جولة الواجهة البحرية ونادي اليخوت',
       price: 320,
       category: 'ترفيه وعصرنة',
-      image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1000&auto=format&fit=crop',
       description: 'استكشف واجهة جدة البحرية الكورنيش، معالم حلبة الفورمولا 1، ونادي اليخوت الفاخر مع نافورة جدة.',
       features: ['جولة بسيارة حديثة', 'زيارة نادي اليخوت', 'تذاكر المعالم الفاخرة', 'مرشد local محلي']
     },
@@ -130,6 +130,9 @@ export default function Home() {
                   <img 
                     src={pkg.image} 
                     alt={pkg.title} 
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000';
+                    }}
                     className="w-full h-64 object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100" 
                   />
                   <span className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/20 text-xs px-3 py-1 rounded-full font-medium">
