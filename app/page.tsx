@@ -67,14 +67,14 @@ export default function Home() {
       faqTitle: "الأسئلة الشائعة ❓",
       faqSub: "إجابات على أهم الاستفسارات قبل قيامك بالحجز معنا",
       trustStats: [
-        { num: "+1,200", label: "سائح ومغامر سعيد" },
+        { num: "+250", label: "سائح ومغامر سعيد" },
         { num: "4.9/5", label: "تقييم العملاء" },
         { num: "100%", label: "مرشدون محليون معتمدون" }
       ],
       reviewsTitle: "آراء وانطباعات الزوار (تجارب حقيقية)",
       reviewsSub: "استمع لما يقوله عملاؤنا عن تفاصيل رحلاتهم واستجمامهم معنا",
       reviews: [
-        { name: "عبدالله الجعيد", flag: "🇸🇦", role: "زائر من الرياض", comment: "خذينا باقة الـ 3 أيام الفل كامل، الصراحة خرافية! من أمتع الأيام اللي قضيناها بجدة. التنظيم دقيق جداً والسواق والمرشد خلوقين وسريعين بالتعامل.", rating: "5/5" },
+        { name: "عبدالله الجعيد", flag: "🇸اؤ", role: "زائر من الرياض", comment: "خذينا باقة الـ 3 أيام الفل كامل، الصراحة خرافية! من أمتع الأيام اللي قضيناها بجدة. التنظيم دقيق جداً والسواق والمرشد خلوقين وسريعين بالتعامل.", rating: "5/5" },
         { name: "سارة وخالد", flag: "🇰🇼", role: "رحلة عرسان (الكويت)", comment: "رحلة اليخت والغروب كانت خيالية، العشاء البحري طازج ولذيذ والخدمة VIP فعلاً. أنصح أي أحد يزور جدة يتواصل مع روّق بدون تردد.", rating: "5/5" },
         { name: "Sarah & Mark Jenkins", flag: "🇬🇧", role: "Tourists from UK", comment: "The Al-Balad historic tour was the absolute highlight of our trip to Saudi Arabia. Our guide knew every hidden coffee spot and historic story. Extremely safe and smooth!", rating: "5/5" },
         { name: "م. فيصل الغامدي", flag: "🇸🇦", role: "رحلة عائلية (6 أفراد)", comment: "أخذنا تجربة الكاياك والغوص في أبحر، العيال انسطحوا بالمرة! المرشدين البحرية متمرسين والسترات ومعدات الأمان ممتازة جداً.", rating: "5/5" },
@@ -135,7 +135,7 @@ export default function Home() {
       faqTitle: "Frequently Asked Questions ❓",
       faqSub: "Find answers to key questions before confirming your booking with us",
       trustStats: [
-        { num: "+1,200", label: "Happy Adventurers" },
+        { num: "+250", label: "Happy Adventurers" },
         { num: "4.9/5", label: "Customer Rating" },
         { num: "100%", label: "Certified Local Guides" }
       ],
@@ -188,7 +188,7 @@ export default function Home() {
     }
   ];
 
-  // الباقة الرئيسية الشاملة الـ 3 أيام (Featured Banner Package)
+  // الباقة الرئيسية الشاملة الـ 3 أيام
   const featured3DayPackage = {
     id: 'full_package_3days',
     typeCategory: 'vip',
@@ -212,7 +212,7 @@ export default function Home() {
     ]
   };
 
-  // 9 باقات متبقية مع الترجمة الكاملة والوسم للتصنيف
+  // 9 باقات متبقية
   const otherPackages = [
     {
       id: 'abhur',
@@ -342,7 +342,6 @@ export default function Home() {
     }
   ];
 
-  // تصفية الباقات بناءً على الفلتر المختار
   const filteredPackages = selectedCategory === 'all' 
     ? otherPackages 
     : otherPackages.filter(p => p.typeCategory === selectedCategory);
@@ -436,33 +435,29 @@ export default function Home() {
         </div>
       </header>
 
-   {/* Hero Section المطور بالحيوية والصور وأزرار التفاعل */}
+      {/* 🌟 Hero Section مع صورة تجمع بين البحر والتراث (جدة واليخوت) */}
       <section className="relative py-28 px-6 text-center border-b border-slate-800/50 overflow-hidden">
         
-        {/* خلفية سينمائية ناعمة مع Overlay داكن للحفاظ على وضوح النصوص */}
-        <div className="absolute inset-0 z-0 opacity-20 bg-cover bg-center transition-all duration-1000 scale-105" 
-             style={{ backgroundImage: "url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1600&auto=format&fit=crop')" }}>
+        {/* خلفية تجمع بين سحر جدة والبحر */}
+        <div className="absolute inset-0 z-0 opacity-35 bg-cover bg-center transition-all duration-1000 scale-105" 
+             style={{ backgroundImage: "url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1600&auto=format&fit=crop')" }}>
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/95 to-slate-950 z-0"></div>
 
         <div className="relative z-10 max-w-4xl mx-auto space-y-8">
           
-          {/* Badge الهوية */}
           <span className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 text-amber-400 text-xs font-semibold px-4 py-2 rounded-full border border-amber-500/30 backdrop-blur-md shadow-lg shadow-amber-500/5">
             <span>✨</span> {t.heroBadge}
           </span>
 
-          {/* العنوان الرئيسي */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight text-white tracking-tight">
             {t.heroTitle}
           </h1>
 
-          {/* الوصف */}
           <p className="text-sm md:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
             {t.heroDesc}
           </p>
 
-          {/* 🔥 أزرار التفاعل (CTA Buttons) التي كانت مفقودة */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <a 
               href="#packages"
@@ -479,37 +474,24 @@ export default function Home() {
             </button>
           </div>
 
-          {/* شارة حجز حيّة تشجع الزائر */}
           <div className="pt-4 flex items-center justify-center gap-3 text-xs text-slate-400 font-light">
             <div className="flex -space-x-2 space-x-reverse overflow-hidden">
               <img className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-950" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100" alt="user" />
               <img className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-950" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100" alt="user" />
               <img className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-950" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100" alt="user" />
             </div>
-            <span>انضم لأكثر من <strong className="text-amber-400 font-bold">+1,200</strong> زائر استمتعوا بتجاربنا في جدة</span>
+            <span>انضم لأكثر من <strong className="text-amber-400 font-bold">+250</strong> زائر استمتعوا بتجاربنا في جدة</span>
           </div>
 
         </div>
       </section>
 
-      {/* Trust & Stats Section */}
+      {/* 📊 Trust & Stats Section (تم التنظيف والإبقاء على نسخة واحدة فقط بأرقام واقعية) */}
       <section className="border-b border-slate-800/60 bg-slate-900/40 py-10 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-4 text-center">
           {t.trustStats.map((stat, i) => (
             <div key={i} className="space-y-1">
               <span className="block text-2xl md:text-4xl font-black bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">{stat.num}</span>
-              <span className="text-xs text-slate-400 font-light">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Trust & Stats Section */}
-      <section className="border-b border-slate-800/60 bg-slate-900/30 py-10">
-        <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-4 text-center">
-          {t.trustStats.map((stat, i) => (
-            <div key={i} className="space-y-1">
-              <span className="block text-2xl md:text-4xl font-black text-amber-400">{stat.num}</span>
               <span className="text-xs text-slate-400 font-light">{stat.label}</span>
             </div>
           ))}
@@ -523,7 +505,7 @@ export default function Home() {
           <p className="text-slate-400 text-sm">{t.packagesSub}</p>
         </div>
 
-        {/* 🌟 1. البنَر المميز العريض للباقة الشاملة الـ 3 أيام (FEATURED BANNER) */}
+        {/* 🌟 1. البنَر المميز العريض للباقة الشاملة الـ 3 أيام */}
         <div className="mb-12 bg-gradient-to-r from-slate-900 via-slate-900/90 to-amber-950/40 rounded-3xl border-2 border-amber-500/50 overflow-hidden shadow-2xl shadow-amber-500/10 grid lg:grid-cols-12 gap-0 group">
           <div className="lg:col-span-7 p-6 md:p-10 flex flex-col justify-between space-y-6">
             <div className="space-y-3">
@@ -574,7 +556,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 🔘 2. شريط أزرار الفلترة السريعة (Quick Filter Buttons) */}
+        {/* 🔘 2. شريط أزرار الفلترة السريعة */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
           <button
             onClick={() => setSelectedCategory('all')}
@@ -673,7 +655,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Expanded Reviews Section with Country Flags */}
+      {/* Expanded Reviews Section */}
       <section className="bg-slate-900/40 border-t border-b border-slate-800/50 py-20 px-6">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-2">
@@ -702,7 +684,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ❓ FAQ Accordion Section (الأسئلة الشائعة) */}
+      {/* FAQ Accordion Section */}
       <section className="py-20 px-6 max-w-4xl mx-auto">
         <div className="text-center mb-12 space-y-2">
           <h2 className="text-2xl md:text-3xl font-bold text-white">{t.faqTitle}</h2>
